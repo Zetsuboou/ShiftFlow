@@ -49,7 +49,7 @@ router.get('/:id', async(req, res) => {
 });
 
 //POST /api/employees - Create employee (for managers to add employees)
-router.post('/', async(res, req) => {
+router.post('/', async(req, res) => {
     try {
         const { email, first_name, last_name, phone, role, hourly_rate, hire_date } = req.body;
 
@@ -72,7 +72,7 @@ router.post('/', async(res, req) => {
 
         //Creates temporary password (manager should tell employee to change it)
         const tempPassword = 'TempPassword123!';
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(tempPassword, 10);
 
         const result = await pool.query(
             `INSERT INTO employees (email, password, first_name, last_name, phone, role, hourly_rate, hire_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id, email, first_name, last_name, phone, role, hourly_rate, hire_date, status, created_at`,
@@ -85,7 +85,7 @@ router.post('/', async(res, req) => {
         });
 
     } catch (error) {
-        console.error('Error creating eployee:', error);
+        console.error('Error creating employee:', error);
         res.status(500).json({ error: 'Server error creating employee' })
     }
 });

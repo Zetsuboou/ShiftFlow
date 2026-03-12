@@ -43,7 +43,6 @@ async function checkShiftConflict(employeeId, shiftDate, startTime, endTime, exc
     }
 };
 
-
 //Check if shift conflicts with approved time-off
 async function checkTimeOffConflict(employeeId, shiftDate){
   try {
